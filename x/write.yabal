@@ -15,7 +15,7 @@ void write(int[] str) {
     for (var i = 0; true; i++) {
         var c = str[i];
 
-        if (c == 0) {
+        if (c == 0xFFFF) {
             break;
         }
 
