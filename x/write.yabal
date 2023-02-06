@@ -22,3 +22,13 @@ void write(int[] str) {
         write(c);
     }
 }
+
+void setPosition(int x, int y) {
+    offset = x + y * 13
+}
+
+void clear() {
+    for (var i = 0; i < maxOffset; i++) {
+        chars[i] = 0
+    }
+}
