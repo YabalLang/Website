@@ -1,0 +1,36 @@
+var chars = create_pointer(0xD12A, 1)
+var offset = 0
+var maxOffset = 13 * 13
+
+void write(int character) {
+    chars[offset] = character
+    offset++
+
+    if (maxOffset >= 170) {
+        offset = 0
+    }
+}
+
+void write(int[] str) {
+    for (var i = 0; true; i++) {
+        var c = str[i];
+
+        if (c == 0) {
+            break;
+        }
+
+        write(c);
+    }
+}
+
+void setPosition(int x, int y) {
+    offset = x + y * 13
+}
+
+void clear() {
+    for (var i = 0; i < maxOffset; i++) {
+        chars[i] = 0
+    }
+
+    offset = 0
+}
