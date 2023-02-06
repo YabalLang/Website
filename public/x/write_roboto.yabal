@@ -1,0 +1,55 @@
+var font = include_font("./font/RobotoMono-Regular.ttf;Size=10,Antialias=0");
+var screen = create_pointer(53871, 1);
+var screenWidth = 108;
+var screenHeight = 108;
+var currentX = 0;
+var currentY = 0;
+
+void renderChar(int screenX, int screenY, int character) {
+    var width = 8;
+    var height = 8;
+    var offset = character * width * height;
+
+    for (var y = 0; y < height; y++) {
+        for (var x = 0; x < width; x++) {
+            var pixel = font[offset + y * width + x];
+
+            if (pixel > 0) {
+                screen[(screenY + y) * screenWidth + (screenX + x)] = pixel;
+            }
+        }
+    }
+}
+
+void write(int character) {
+    renderChar(currentX, currentY, character);
+    currentX += 8;
+
+    if (currentX >= 104) {
+        currentX = 0;
+        currentY += 8;
+    }
+}
+
+void write(int[] str) {
+    for (var i = 0; true; i++) {
+        var c = str[i];
+
+        if (c == 0xFFFF) {
+            break;
+        }
+
+        write_char(c);
+    }
+}
+
+void setPosition(int x, int y) {
+    currentX = x;
+    currentY = y;
+}
+
+void clear() {
+    for (var i = 0; i < 108 * 108; i++) {
+        screen[i] = 0;
+    }
+}
