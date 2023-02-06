@@ -39,7 +39,7 @@ void write(int[] str) {
             break;
         }
 
-        write_char(c);
+        write(c);
     }
 }
 
