@@ -1,4 +1,4 @@
-var font = include_font("./font/RobotoMono-Regular.ttf;Size=10,Antialias=0");
+var font = include_font("./font/RobotoMono-Regular.ttf;Size=10,Antialias=1");
 var screen = create_pointer(53871, 1);
 var screenWidth = 108;
 var screenHeight = 108;
