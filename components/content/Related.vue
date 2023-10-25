@@ -8,8 +8,8 @@
                             <div class="card-body">
                                 <h5 class="card-title">{{ child.title }}</h5>
                                 <p class="card-text">
-                                    <ContentDoc :path="child._path" v-slot="{ doc: child }" :head="false">
-                                        {{ child.description }}
+                                    <ContentDoc :path="child._path" v-slot="childSlot" :head="false">
+                                        {{ childSlot.doc.description }}
                                     </ContentDoc>
                                 </p>
                             </div>

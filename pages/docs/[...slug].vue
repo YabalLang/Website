@@ -29,9 +29,9 @@
             </div>
             <div class="col-9">
                 <main>
-                    <ContentDoc v-slot="{ doc }">
+                    <ContentDoc v-slot="slot">
                         <article>
-                            <ContentRenderer :value="doc" />
+                            <ContentRenderer :value="slot.doc" />
                         </article>
                     </ContentDoc>
                 </main>
