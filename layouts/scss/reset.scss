@@ -1,0 +1,21 @@
+@import "bootstrap/scss/bootstrap";
+
+.shiki {
+    border: .125rem solid #e6e6e6;
+    background: #f2f2f2;
+    padding: 0.5rem;
+}
+
+h1, h2, h3 {
+    padding-top: 1rem;
+    padding-bottom: 0.25rem;
+
+    a {
+        text-decoration: none;
+        color: var(--bs-heading-color);
+    }
+}
+
+table {
+    @extend .table;
+}

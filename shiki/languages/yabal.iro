@@ -1,0 +1,461 @@
+name                   = yabal
+file_extensions []     = yabal;
+
+################################################################
+## Constants
+################################################################
+
+__KEYWORDS \= (\bint\b|\bbool\b|\bvar\b|\breturn\b|\bfor\b|\bif\b)
+__IDENTIFIER \= (\b[a-zA-Z$_][a-zA-Z0-9$_]*)
+
+################################################################
+## Styles
+################################################################
+
+styles [] {
+
+.comment : style {
+   color                 = light_green
+   italic                = true
+   ace_scope             = comment
+   textmate_scope        = comment
+   pygments_scope        = Comment
+}
+
+.keyword : style {
+   color     = cyan
+   ace_scope             = keyword
+   textmate_scope        = keyword
+   pygments_scope        = Keyword
+}
+
+.entity.name.gotoLabel : style {
+   color     = cyan
+   ace_scope             = entity.name.goto-label
+   textmate_scope        = entity.name.goto-label
+   pygments_scope        = Keyword
+}
+
+.entity.name : style {
+   color     = yellow
+   ace_scope             = entity.name
+   textmate_scope        = entity.name
+   pygments_scope        = Name.Variable
+}
+
+
+.keyword.control.asm : style {
+   color     = cyan
+   ace_scope             = keyword.control.asm
+   textmate_scope        = keyword.control.asm
+   pygments_scope        = Keyword
+}
+
+.numeric : style {
+   color                 = gold
+   ace_scope             = constant.numeric
+   textmate_scope        = constant.numeric
+   pygments_scope        = Number
+}
+
+.punctuation.curlybrace.open : style {
+   color                 = red_2
+   ace_scope             = punctuation.curlybrace.open
+   textmate_scope        = punctuation.curlybrace.open
+   pygments_scope        = Punctuation
+}
+
+.punctuation.curlybrace.close : style {
+   color                 = red_2
+   ace_scope             = punctuation.curlybrace.close
+   textmate_scope        = punctuation.curlybrace.close
+   pygments_scope        = Punctuation
+}
+
+.punctuation.squarebracket.open : style {
+   color                 = red_2
+   ace_scope             = punctuation.squarebracket.open
+   textmate_scope        = punctuation.squarebracket.open
+   pygments_scope        = Punctuation
+}
+
+.punctuation.squarebracket.close : style {
+   color                 = red_2
+   ace_scope             = punctuation.squarebracket.close
+   textmate_scope        = punctuation.squarebracket.close
+   pygments_scope        = Punctuation
+}
+
+.punctuation.definition.variable : style {
+   color                 = red_2
+   ace_scope             = punctuation.definition.variable
+   textmate_scope        = punctuation.definition.variable
+   pygments_scope        = Punctuation
+}
+
+.punctuation.terminator.statement : style {
+   color                 = red_2
+   ace_scope             = punctuation.terminator.statement
+   textmate_scope        = punctuation.terminator.statement
+   pygments_scope        = Punctuation
+}
+
+.punctuation.definition.string.begin : style {
+   color                 = red_2
+   ace_scope             = punctuation.definition.string.begin
+   textmate_scope        = punctuation.definition.string.begin
+   pygments_scope        = Punctuation
+}
+
+.punctuation.definition.string.end : style {
+   color                 = red_2
+   ace_scope             = punctuation.definition.string.end
+   textmate_scope        = punctuation.definition.string.end
+   pygments_scope        = Punctuation
+}
+
+.punctuation.separator.comma : style {
+   color                 = red_2
+   ace_scope             = punctuation.separator.comma
+   textmate_scope        = punctuation.separator.comma
+   pygments_scope        = Punctuation
+}
+
+.punctuation.separator.colon : style {
+   color                 = red_2
+   ace_scope             = punctuation.separator.colon
+   textmate_scope        = punctuation.separator.colon
+   pygments_scope        = Punctuation
+}
+
+.entity.name.label  : style {
+   color                 = red_2
+   ace_scope             = entity.name.label
+   textmate_scope        = entity.name.label
+   pygments_scope        = Name.Entity
+}
+
+.meta.brace.round : style {
+   color                 = red_2
+   ace_scope             = meta.brace.round
+   textmate_scope        = meta.brace.round
+   pygments_scope        = Punctuation
+}
+
+.text : style {
+   color                 = brown
+   ace_scope             = text
+   textmate_scope        = text
+   pygments_scope        = String
+}
+
+.variable.other : style {
+   color                 = brown
+   ace_scope             = variable.other
+   textmate_scope        = variable.other
+   pygments_scope        = Name.Variable
+}
+
+.illegal : style {
+   color                 = white
+   background_color      = red
+   ace_scope             = invalid
+   textmate_scope        = invalid
+   pygments_scope        = Generic.Error
+}
+
+.source : style {
+   color                 = white
+   ace_scope             = source
+   textmate_scope        = source
+   pygments_scope        = Generic
+}
+
+.operator : style {
+   color                 = white
+   ace_scope             = keyword.operator
+   textmate_scope        = keyword.operator
+   pygments_scope        = Operator
+}
+
+}
+
+#################################################
+## Parse contexts
+#################################################
+
+contexts [] {
+
+##############################################
+## Main Context - Entry point context
+##############################################
+
+main : context {
+
+   : include "assembly" ;
+   
+   : inline_push {
+      regex          \= (\binline)?$${__KEYWORDS}(\s+)$${__IDENTIFIER}(\s*)(\()
+      styles []       = .keyword, .keyword, .source, .variable.other, .source, .meta.brace.round;
+      : pop {
+         regex       \= (\))
+         styles []    = .meta.brace.round;
+      }
+      : include "function_parameter" ;
+   }
+   
+   : inline_push {
+      regex          \= (\binline)?$${__IDENTIFIER}(\s+)$${__IDENTIFIER}(\s*)(\()
+      styles []       = .keyword, .entity.name, .source, .variable.other, .source, .meta.brace.round;
+      : pop {
+         regex       \= (\))
+         styles []    = .meta.brace.round;
+      }
+      : include "function_parameter" ;
+   }
+   
+   : inline_push {
+      regex          \= (\bstruct)(\s+)$${__IDENTIFIER}(\s*)(\{)
+      styles []       = .keyword, .source, .entity.name, .source, .punctuation.curlybrace.open;
+      : pop {
+         regex       \= (\})
+         styles []    = .punctuation.curlybrace.close;
+      }
+      : include "struct" ;
+   }
+
+   : pattern {
+      regex          \= (\bstackalloc)(\s+)$${__KEYWORDS}
+      styles []       = .keyword, .source, .keyword;
+   }
+
+   : pattern {
+      regex          \= (\bstackalloc)(\s+)$${__IDENTIFIER}
+      styles []       = .keyword, .source, .entity.name;
+   }
+
+   : pattern {
+      regex          \= $${__KEYWORDS}(\s+)$${__IDENTIFIER}
+      styles []       = .keyword, .source, .variable.other;
+   }
+
+   : pattern {
+      regex          \= $${__KEYWORDS}
+      styles []       = .keyword;
+   }
+
+   : pattern {
+      regex          \= $${__IDENTIFIER}(\s+)$${__IDENTIFIER}
+      styles []       = .entity.name, .source, .variable.other;
+   }
+
+   : pattern {
+      regex          \= $${__IDENTIFIER}
+      styles []       = .variable.other;
+   }
+   
+   : include "numeric" ;
+   
+   : inline_push {
+      regex          \= (\{)
+      styles []       = .punctuation.curlybrace.open;
+      : pop {  
+         regex       \= (\})
+         styles []    = .punctuation.curlybrace.close;
+      }
+      : include "main" ;
+   }
+   
+   : inline_push {
+      regex          \= (\[)
+      styles []       = .punctuation.squarebracket.open;
+      : pop {  
+         regex       \= (\])
+         styles []    = .punctuation.squarebracket.close;
+      }
+      : include "main" ;
+   }
+   
+   : pattern {
+      regex          \= (;)
+      styles []       = .punctuation.terminator.statement;
+   }
+   
+   : inline_push {
+      regex          \= (\")
+      styles []       = .punctuation.definition.string.begin;
+      default_style   = .text
+      : pop {
+         regex       \= (\")
+         styles []    = .punctuation.definition.string.end;
+      }
+   }
+   
+   : inline_push {
+      regex          \= (\')([^']?)
+      styles []       = .punctuation.definition.string.begin, .text;
+      default_style   = .illegal
+      : pop {
+         regex       \= (\')
+         styles []    = .punctuation.definition.string.end;
+      }
+   }
+   
+   : inline_push {
+      regex          \= (\()
+      styles []       = .meta.brace.round;
+      : pop {
+         regex       \= (\))
+         styles []    = .meta.brace.round;
+      }
+      : include "numeric" ;
+      : pattern {
+         regex       \= (,)
+         styles []    = .punctuation.separator.comma;
+      }
+   }
+   
+   : include "multi_line_comment" ;
+   : include "single_line_comment" ;
+   
+   : pattern {
+      regex          \= (\|\||\||\^|&|%|~|<<|>>|\+|-|\*|/|==|\+=|-=|\+\+|--|\+\+|--|\*=|/=|=)
+      styles []       = .operator;
+   }  
+   
+   : pattern {
+      regex          \= (.)
+      styles []       = .source;
+   }
+   
+}
+
+#################################################
+## End of Contexts
+#################################################
+
+###########################################
+## Assembly Context
+###########################################
+assembly : context {
+   description        = assembly
+   : inline_push {
+      regex          \= (asm)\s*(\{)
+      styles []       = .keyword.control.asm, .punctuation.curlybrace.open;
+      : pop {
+         regex       \= (\})
+         styles []    = .punctuation.curlybrace.close;
+      }
+      
+      : pattern {
+         regex          \= (,.*)
+         styles []       = .comment;
+      }
+
+      : pattern {
+         regex          \= $${__IDENTIFIER}(\:)
+         styles []       = .entity.name.gotoLabel, .punctuation.separator.colon;
+      }
+      : pattern {
+         regex          \= $${__IDENTIFIER}(\s+)(\@)$${__IDENTIFIER}
+         styles []       = .keyword, .source, .punctuation.definition.variable, .variable.other;
+      }
+
+      : pattern {
+         regex          \= $${__IDENTIFIER}(\s+)$${__IDENTIFIER}
+         styles []       = .keyword, .source, .entity.name.label;
+      }
+
+      : pattern {
+         regex          \= $${__IDENTIFIER}
+         styles []       = .keyword;
+      }
+   
+      : include "numeric" ;
+      : include "multi_line_comment" ;
+      : include "single_line_comment" ;
+   }
+}
+
+###########################################
+## Function Context
+###########################################
+function_parameter : context {
+   : pattern {
+      regex          \= $${__KEYWORDS}(\s+)$${__IDENTIFIER}
+      styles []       = .keyword, .source, .variable.other;
+   }
+
+   : pattern {
+      regex          \= $${__IDENTIFIER}(\s+)$${__IDENTIFIER}
+      styles []       = .entity.name, .source, .variable.other;
+   }
+   
+   : pattern {
+      regex       \= (,)
+      styles []    = .punctuation.separator.comma;
+   }
+}
+
+###########################################
+## Struct Context
+###########################################
+struct : context {
+   : pattern {
+      regex          \= $${__KEYWORDS}(\s+)$${__IDENTIFIER}(\s*)(\:)(\s*)(\d+)
+      styles []       = .keyword, .source, .variable.other, .source, .operator, .source, .numeric;
+   }
+   
+   : pattern {
+      regex          \= $${__KEYWORDS}(\s+)$${__IDENTIFIER}
+      styles []       = .keyword, .source, .variable.other;
+   }
+
+   : pattern {
+      regex          \= $${__IDENTIFIER}(\s+)$${__IDENTIFIER}(\s*)(\:)(\s*)(\d+)
+      styles []       = .entity.name, .source, .variable.other, .source, .operator, .source, .numeric;
+   }
+
+   : pattern {
+      regex          \= $${__IDENTIFIER}(\s+)$${__IDENTIFIER}
+      styles []       = .entity.name, .source, .variable.other;
+   }
+}
+
+###########################################
+## Numeric Context
+###########################################
+
+numeric : context {
+   : pattern {
+      regex          \= (\b\d+)
+      styles []       = .numeric;
+   }
+}
+
+###########################################
+## Comment Context
+###########################################
+
+multi_line_comment : context {
+   description        = multiline
+   : inline_push {
+      regex          \= (/\*)
+      styles []       = .comment;
+      default_style   = .comment
+      : pop {
+         regex       \= (\*/)
+         styles []    = .comment;
+      }
+   }
+}
+
+single_line_comment : context {
+   description        = singleline
+   : pattern {
+      regex          \= (//.*)
+      styles []       = .comment;
+   }
+}
+   
+}
