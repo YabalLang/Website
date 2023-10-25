@@ -1,0 +1,115 @@
+{
+  "fileTypes": [
+    "a8"
+  ],
+  "name": "a8",
+  "patterns": [
+    {
+      "include": "#main"
+    }
+  ],
+  "scopeName": "source.a8",
+  "repository": {
+    "main": {
+      "patterns": [
+        {
+          "match": "(,.*)",
+          "name": "comment.a8"
+        },
+        {
+          "match": "(\\b[a-zA-Z\\x{0024}_][a-zA-Z0-9\\x{0024}_]*)(\\:)",
+          "captures": {
+            "1": {
+              "name": "entity.name.goto-label.a8"
+            },
+            "2": {
+              "name": "punctuation.separator.colon.a8"
+            }
+          }
+        },
+        {
+          "match": "(\\b[a-zA-Z\\x{0024}_][a-zA-Z0-9\\x{0024}_]*)(\\s+)(\\@)(\\b[a-zA-Z\\x{0024}_][a-zA-Z0-9\\x{0024}_]*)",
+          "captures": {
+            "1": {
+              "name": "keyword.a8"
+            },
+            "2": {
+              "name": "source.a8"
+            },
+            "3": {
+              "name": "punctuation.definition.variable.a8"
+            },
+            "4": {
+              "name": "variable.other.a8"
+            }
+          }
+        },
+        {
+          "match": "(\\b[a-zA-Z\\x{0024}_][a-zA-Z0-9\\x{0024}_]*)(\\s+)(\\b[a-zA-Z\\x{0024}_][a-zA-Z0-9\\x{0024}_]*)",
+          "captures": {
+            "1": {
+              "name": "keyword.a8"
+            },
+            "2": {
+              "name": "source.a8"
+            },
+            "3": {
+              "name": "entity.name.label.a8"
+            }
+          }
+        },
+        {
+          "match": "(\\b[a-zA-Z\\x{0024}_][a-zA-Z0-9\\x{0024}_]*)",
+          "name": "keyword.a8"
+        },
+        {
+          "include": "#numeric"
+        },
+        {
+          "include": "#multi_line_comment"
+        },
+        {
+          "include": "#single_line_comment"
+        }
+      ]
+    },
+    "multi_line_comment": {
+      "patterns": [
+        {
+          "begin": "(/\\*)",
+          "beginCaptures": {
+            "1": {
+              "name": "comment.a8"
+            }
+          },
+          "contentName": "comment.a8",
+          "end": "(\\*/)",
+          "endCaptures": {
+            "1": {
+              "name": "comment.a8"
+            }
+          }
+        }
+      ]
+    },
+    "multi_line_comment__1": {
+      "patterns": []
+    },
+    "numeric": {
+      "patterns": [
+        {
+          "match": "(\\b\\d+)",
+          "name": "constant.numeric.a8"
+        }
+      ]
+    },
+    "single_line_comment": {
+      "patterns": [
+        {
+          "match": "(//.*)",
+          "name": "comment.a8"
+        }
+      ]
+    }
+  }
+}

@@ -31,8 +31,14 @@
           <string>#assembly</string>
         </dict>
         <dict>
+          <key>match</key>
+          <string>(\breturn\b|\bfor\b|\bif\b|\binline\b)</string>
+          <key>name</key>
+          <string>keyword.yabal</string>
+        </dict>
+        <dict>
           <key>begin</key>
-          <string>(\binline)?(\bint\b|\bbool\b|\bvar\b|\breturn\b|\bfor\b|\bif\b)(\s+)(\b[a-zA-Z\x{0024}_][a-zA-Z0-9\x{0024}_]*)(\s*)(\()</string>
+          <string>(\binline)?(\bint\b|\bbool\b|\bvar\b)(\s+)(\b[a-zA-Z\x{0024}_][a-zA-Z0-9\x{0024}_]*)(\s*)(\()</string>
           <key>beginCaptures</key>
           <dict>
             <key>1</key>
@@ -189,7 +195,7 @@
         </dict>
         <dict>
           <key>match</key>
-          <string>(\bstackalloc)(\s+)(\bint\b|\bbool\b|\bvar\b|\breturn\b|\bfor\b|\bif\b)</string>
+          <string>(\bstackalloc)(\s+)(\bint\b|\bbool\b|\bvar\b)</string>
           <key>captures</key>
           <dict>
             <key>1</key>
@@ -233,7 +239,7 @@
         </dict>
         <dict>
           <key>match</key>
-          <string>(\bint\b|\bbool\b|\bvar\b|\breturn\b|\bfor\b|\bif\b)(\s+)(\b[a-zA-Z\x{0024}_][a-zA-Z0-9\x{0024}_]*)</string>
+          <string>(\bint\b|\bbool\b|\bvar\b)(\s+)(\b[a-zA-Z\x{0024}_][a-zA-Z0-9\x{0024}_]*)</string>
           <key>captures</key>
           <dict>
             <key>1</key>
@@ -255,7 +261,7 @@
         </dict>
         <dict>
           <key>match</key>
-          <string>(\bint\b|\bbool\b|\bvar\b|\breturn\b|\bfor\b|\bif\b)</string>
+          <string>(\bint\b|\bbool\b|\bvar\b)</string>
           <key>name</key>
           <string>keyword.yabal</string>
         </dict>
@@ -601,7 +607,7 @@
       <array> 
         <dict>
           <key>match</key>
-          <string>(\bint\b|\bbool\b|\bvar\b|\breturn\b|\bfor\b|\bif\b)(\s+)(\b[a-zA-Z\x{0024}_][a-zA-Z0-9\x{0024}_]*)</string>
+          <string>(\bint\b|\bbool\b|\bvar\b)(\s+)(\b[a-zA-Z\x{0024}_][a-zA-Z0-9\x{0024}_]*)</string>
           <key>captures</key>
           <dict>
             <key>1</key>
@@ -645,9 +651,101 @@
         </dict>
         <dict>
           <key>match</key>
+          <string>(\bint\b|\bbool\b|\bvar\b)(\s*)(\[)(\s*)(\])(\s+)(\b[a-zA-Z\x{0024}_][a-zA-Z0-9\x{0024}_]*)</string>
+          <key>captures</key>
+          <dict>
+            <key>1</key>
+            <dict>
+              <key>name</key>
+              <string>keyword.yabal</string>
+            </dict>
+            <key>2</key>
+            <dict>
+              <key>name</key>
+              <string>source.yabal</string>
+            </dict>
+            <key>3</key>
+            <dict>
+              <key>name</key>
+              <string>punctuation.squarebracket.open.yabal</string>
+            </dict>
+            <key>4</key>
+            <dict>
+              <key>name</key>
+              <string>source.yabal</string>
+            </dict>
+            <key>5</key>
+            <dict>
+              <key>name</key>
+              <string>punctuation.squarebracket.close.yabal</string>
+            </dict>
+            <key>6</key>
+            <dict>
+              <key>name</key>
+              <string>source.yabal</string>
+            </dict>
+            <key>7</key>
+            <dict>
+              <key>name</key>
+              <string>variable.other.yabal</string>
+            </dict>
+          </dict>
+        </dict>
+        <dict>
+          <key>match</key>
+          <string>(\b[a-zA-Z\x{0024}_][a-zA-Z0-9\x{0024}_]*)(\s*)(\[)(\s*)(\])(\s+)(\b[a-zA-Z\x{0024}_][a-zA-Z0-9\x{0024}_]*)</string>
+          <key>captures</key>
+          <dict>
+            <key>1</key>
+            <dict>
+              <key>name</key>
+              <string>entity.name.yabal</string>
+            </dict>
+            <key>2</key>
+            <dict>
+              <key>name</key>
+              <string>source.yabal</string>
+            </dict>
+            <key>3</key>
+            <dict>
+              <key>name</key>
+              <string>punctuation.squarebracket.open.yabal</string>
+            </dict>
+            <key>4</key>
+            <dict>
+              <key>name</key>
+              <string>source.yabal</string>
+            </dict>
+            <key>5</key>
+            <dict>
+              <key>name</key>
+              <string>punctuation.squarebracket.close.yabal</string>
+            </dict>
+            <key>6</key>
+            <dict>
+              <key>name</key>
+              <string>source.yabal</string>
+            </dict>
+            <key>7</key>
+            <dict>
+              <key>name</key>
+              <string>variable.other.yabal</string>
+            </dict>
+          </dict>
+        </dict>
+        <dict>
+          <key>match</key>
           <string>(,)</string>
           <key>name</key>
           <string>punctuation.separator.comma.yabal</string>
+        </dict>
+        <dict>
+          <key>include</key>
+          <string>#multi_line_comment</string>
+        </dict>
+        <dict>
+          <key>include</key>
+          <string>#single_line_comment</string>
         </dict>
        </array>
     </dict>
@@ -794,130 +892,28 @@
       <key>patterns</key>
       <array> 
         <dict>
+          <key>include</key>
+          <string>#function_parameter</string>
+        </dict>
+        <dict>
           <key>match</key>
-          <string>(\bint\b|\bbool\b|\bvar\b|\breturn\b|\bfor\b|\bif\b)(\s+)(\b[a-zA-Z\x{0024}_][a-zA-Z0-9\x{0024}_]*)(\s*)(\:)(\s*)(\d+)</string>
+          <string>(\:)(\s*)(\d+)</string>
           <key>captures</key>
           <dict>
             <key>1</key>
-            <dict>
-              <key>name</key>
-              <string>keyword.yabal</string>
-            </dict>
-            <key>2</key>
-            <dict>
-              <key>name</key>
-              <string>source.yabal</string>
-            </dict>
-            <key>3</key>
-            <dict>
-              <key>name</key>
-              <string>variable.other.yabal</string>
-            </dict>
-            <key>4</key>
-            <dict>
-              <key>name</key>
-              <string>source.yabal</string>
-            </dict>
-            <key>5</key>
             <dict>
               <key>name</key>
               <string>keyword.operator.yabal</string>
             </dict>
-            <key>6</key>
+            <key>2</key>
             <dict>
               <key>name</key>
               <string>source.yabal</string>
             </dict>
-            <key>7</key>
+            <key>3</key>
             <dict>
               <key>name</key>
               <string>constant.numeric.yabal</string>
-            </dict>
-          </dict>
-        </dict>
-        <dict>
-          <key>match</key>
-          <string>(\bint\b|\bbool\b|\bvar\b|\breturn\b|\bfor\b|\bif\b)(\s+)(\b[a-zA-Z\x{0024}_][a-zA-Z0-9\x{0024}_]*)</string>
-          <key>captures</key>
-          <dict>
-            <key>1</key>
-            <dict>
-              <key>name</key>
-              <string>keyword.yabal</string>
-            </dict>
-            <key>2</key>
-            <dict>
-              <key>name</key>
-              <string>source.yabal</string>
-            </dict>
-            <key>3</key>
-            <dict>
-              <key>name</key>
-              <string>variable.other.yabal</string>
-            </dict>
-          </dict>
-        </dict>
-        <dict>
-          <key>match</key>
-          <string>(\b[a-zA-Z\x{0024}_][a-zA-Z0-9\x{0024}_]*)(\s+)(\b[a-zA-Z\x{0024}_][a-zA-Z0-9\x{0024}_]*)(\s*)(\:)(\s*)(\d+)</string>
-          <key>captures</key>
-          <dict>
-            <key>1</key>
-            <dict>
-              <key>name</key>
-              <string>entity.name.yabal</string>
-            </dict>
-            <key>2</key>
-            <dict>
-              <key>name</key>
-              <string>source.yabal</string>
-            </dict>
-            <key>3</key>
-            <dict>
-              <key>name</key>
-              <string>variable.other.yabal</string>
-            </dict>
-            <key>4</key>
-            <dict>
-              <key>name</key>
-              <string>source.yabal</string>
-            </dict>
-            <key>5</key>
-            <dict>
-              <key>name</key>
-              <string>keyword.operator.yabal</string>
-            </dict>
-            <key>6</key>
-            <dict>
-              <key>name</key>
-              <string>source.yabal</string>
-            </dict>
-            <key>7</key>
-            <dict>
-              <key>name</key>
-              <string>constant.numeric.yabal</string>
-            </dict>
-          </dict>
-        </dict>
-        <dict>
-          <key>match</key>
-          <string>(\b[a-zA-Z\x{0024}_][a-zA-Z0-9\x{0024}_]*)(\s+)(\b[a-zA-Z\x{0024}_][a-zA-Z0-9\x{0024}_]*)</string>
-          <key>captures</key>
-          <dict>
-            <key>1</key>
-            <dict>
-              <key>name</key>
-              <string>entity.name.yabal</string>
-            </dict>
-            <key>2</key>
-            <dict>
-              <key>name</key>
-              <string>source.yabal</string>
-            </dict>
-            <key>3</key>
-            <dict>
-              <key>name</key>
-              <string>variable.other.yabal</string>
             </dict>
           </dict>
         </dict>

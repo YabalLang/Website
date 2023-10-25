@@ -6,6 +6,11 @@
     padding: 0.5rem;
 }
 
+.dark .shiki {
+    border-color: #333;
+    background: #222;
+}
+
 h1, h2, h3 {
     padding-top: 1rem;
     padding-bottom: 0.25rem;
@@ -18,4 +23,8 @@ h1, h2, h3 {
 
 table {
     @extend .table;
+}
+
+.alert p:last-child {
+    margin-bottom: 0;
 }

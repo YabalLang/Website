@@ -16,7 +16,11 @@
           "include": "#assembly"
         },
         {
-          "begin": "(\\binline)?(\\bint\\b|\\bbool\\b|\\bvar\\b|\\breturn\\b|\\bfor\\b|\\bif\\b)(\\s+)(\\b[a-zA-Z\\x{0024}_][a-zA-Z0-9\\x{0024}_]*)(\\s*)(\\()",
+          "match": "(\\breturn\\b|\\bfor\\b|\\bif\\b|\\binline\\b)",
+          "name": "keyword.yabal"
+        },
+        {
+          "begin": "(\\binline)?(\\bint\\b|\\bbool\\b|\\bvar\\b)(\\s+)(\\b[a-zA-Z\\x{0024}_][a-zA-Z0-9\\x{0024}_]*)(\\s*)(\\()",
           "beginCaptures": {
             "1": {
               "name": "keyword.yabal"
@@ -115,7 +119,7 @@
           }
         },
         {
-          "match": "(\\bstackalloc)(\\s+)(\\bint\\b|\\bbool\\b|\\bvar\\b|\\breturn\\b|\\bfor\\b|\\bif\\b)",
+          "match": "(\\bstackalloc)(\\s+)(\\bint\\b|\\bbool\\b|\\bvar\\b)",
           "captures": {
             "1": {
               "name": "keyword.yabal"
@@ -143,7 +147,7 @@
           }
         },
         {
-          "match": "(\\bint\\b|\\bbool\\b|\\bvar\\b|\\breturn\\b|\\bfor\\b|\\bif\\b)(\\s+)(\\b[a-zA-Z\\x{0024}_][a-zA-Z0-9\\x{0024}_]*)",
+          "match": "(\\bint\\b|\\bbool\\b|\\bvar\\b)(\\s+)(\\b[a-zA-Z\\x{0024}_][a-zA-Z0-9\\x{0024}_]*)",
           "captures": {
             "1": {
               "name": "keyword.yabal"
@@ -157,7 +161,7 @@
           }
         },
         {
-          "match": "(\\bint\\b|\\bbool\\b|\\bvar\\b|\\breturn\\b|\\bfor\\b|\\bif\\b)",
+          "match": "(\\bint\\b|\\bbool\\b|\\bvar\\b)",
           "name": "keyword.yabal"
         },
         {
@@ -383,7 +387,7 @@
     "function_parameter": {
       "patterns": [
         {
-          "match": "(\\bint\\b|\\bbool\\b|\\bvar\\b|\\breturn\\b|\\bfor\\b|\\bif\\b)(\\s+)(\\b[a-zA-Z\\x{0024}_][a-zA-Z0-9\\x{0024}_]*)",
+          "match": "(\\bint\\b|\\bbool\\b|\\bvar\\b)(\\s+)(\\b[a-zA-Z\\x{0024}_][a-zA-Z0-9\\x{0024}_]*)",
           "captures": {
             "1": {
               "name": "keyword.yabal"
@@ -411,8 +415,66 @@
           }
         },
         {
+          "match": "(\\bint\\b|\\bbool\\b|\\bvar\\b)(\\s*)(\\[)(\\s*)(\\])(\\s+)(\\b[a-zA-Z\\x{0024}_][a-zA-Z0-9\\x{0024}_]*)",
+          "captures": {
+            "1": {
+              "name": "keyword.yabal"
+            },
+            "2": {
+              "name": "source.yabal"
+            },
+            "3": {
+              "name": "punctuation.squarebracket.open.yabal"
+            },
+            "4": {
+              "name": "source.yabal"
+            },
+            "5": {
+              "name": "punctuation.squarebracket.close.yabal"
+            },
+            "6": {
+              "name": "source.yabal"
+            },
+            "7": {
+              "name": "variable.other.yabal"
+            }
+          }
+        },
+        {
+          "match": "(\\b[a-zA-Z\\x{0024}_][a-zA-Z0-9\\x{0024}_]*)(\\s*)(\\[)(\\s*)(\\])(\\s+)(\\b[a-zA-Z\\x{0024}_][a-zA-Z0-9\\x{0024}_]*)",
+          "captures": {
+            "1": {
+              "name": "entity.name.yabal"
+            },
+            "2": {
+              "name": "source.yabal"
+            },
+            "3": {
+              "name": "punctuation.squarebracket.open.yabal"
+            },
+            "4": {
+              "name": "source.yabal"
+            },
+            "5": {
+              "name": "punctuation.squarebracket.close.yabal"
+            },
+            "6": {
+              "name": "source.yabal"
+            },
+            "7": {
+              "name": "variable.other.yabal"
+            }
+          }
+        },
+        {
           "match": "(,)",
           "name": "punctuation.separator.comma.yabal"
+        },
+        {
+          "include": "#multi_line_comment"
+        },
+        {
+          "include": "#single_line_comment"
         }
       ]
     },
@@ -509,82 +571,19 @@
     "struct": {
       "patterns": [
         {
-          "match": "(\\bint\\b|\\bbool\\b|\\bvar\\b|\\breturn\\b|\\bfor\\b|\\bif\\b)(\\s+)(\\b[a-zA-Z\\x{0024}_][a-zA-Z0-9\\x{0024}_]*)(\\s*)(\\:)(\\s*)(\\d+)",
+          "include": "#function_parameter"
+        },
+        {
+          "match": "(\\:)(\\s*)(\\d+)",
           "captures": {
             "1": {
-              "name": "keyword.yabal"
-            },
-            "2": {
-              "name": "source.yabal"
-            },
-            "3": {
-              "name": "variable.other.yabal"
-            },
-            "4": {
-              "name": "source.yabal"
-            },
-            "5": {
               "name": "keyword.operator.yabal"
             },
-            "6": {
+            "2": {
               "name": "source.yabal"
             },
-            "7": {
+            "3": {
               "name": "constant.numeric.yabal"
-            }
-          }
-        },
-        {
-          "match": "(\\bint\\b|\\bbool\\b|\\bvar\\b|\\breturn\\b|\\bfor\\b|\\bif\\b)(\\s+)(\\b[a-zA-Z\\x{0024}_][a-zA-Z0-9\\x{0024}_]*)",
-          "captures": {
-            "1": {
-              "name": "keyword.yabal"
-            },
-            "2": {
-              "name": "source.yabal"
-            },
-            "3": {
-              "name": "variable.other.yabal"
-            }
-          }
-        },
-        {
-          "match": "(\\b[a-zA-Z\\x{0024}_][a-zA-Z0-9\\x{0024}_]*)(\\s+)(\\b[a-zA-Z\\x{0024}_][a-zA-Z0-9\\x{0024}_]*)(\\s*)(\\:)(\\s*)(\\d+)",
-          "captures": {
-            "1": {
-              "name": "entity.name.yabal"
-            },
-            "2": {
-              "name": "source.yabal"
-            },
-            "3": {
-              "name": "variable.other.yabal"
-            },
-            "4": {
-              "name": "source.yabal"
-            },
-            "5": {
-              "name": "keyword.operator.yabal"
-            },
-            "6": {
-              "name": "source.yabal"
-            },
-            "7": {
-              "name": "constant.numeric.yabal"
-            }
-          }
-        },
-        {
-          "match": "(\\b[a-zA-Z\\x{0024}_][a-zA-Z0-9\\x{0024}_]*)(\\s+)(\\b[a-zA-Z\\x{0024}_][a-zA-Z0-9\\x{0024}_]*)",
-          "captures": {
-            "1": {
-              "name": "entity.name.yabal"
-            },
-            "2": {
-              "name": "source.yabal"
-            },
-            "3": {
-              "name": "variable.other.yabal"
             }
           }
         }

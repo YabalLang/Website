@@ -2,12 +2,25 @@
     <div class="container">
         <div class="row">
             <div class="col-3">
+                <div class="d-flex gap-2 align-items-center justify-content-between">
+                    <div class="mt-2 mb-3 text-center fw-bold fs-4">
+                        Yabal documentation
+                    </div>
+
+                    <button type="button" class="btn btn-outline-secondary" @click="isDark = !isDark">
+                        {{ isDark ? '🌙' : '☀️' }}
+                    </button>
+                </div>
                 <nav>
                     <ContentNavigation v-slot="{ navigation }">
                         <div class="list-group">
                             <template v-for="link of navigation.filter(i => i.root)" :key="link._path">
                                 <template v-for="child of link.children" :key="child._path">
-                                    <NuxtLink class="list-group-item list-group-item-action" activeClass="active" :to="child._path">{{ child.title }}</NuxtLink>
+                                    <NuxtLink class="list-group-item list-group-item-action fw-bold" activeClass="active" :to="child._path">{{ child.title }}</NuxtLink>
+
+                                    <template v-for="subchild of child.children?.filter(i => i.sidebar !== false)" :key="subchild._path">
+                                        <NuxtLink class="list-group-item list-group-item-action small ps-5 py-1" activeClass="active" :to="subchild._path">{{ subchild.title }}</NuxtLink>
+                                    </template>
                                 </template>
                             </template>
                         </div>
@@ -19,31 +32,6 @@
                     <ContentDoc v-slot="{ doc }">
                         <article>
                             <ContentRenderer :value="doc" />
-
-                            <template v-if="doc.show_children">
-                                <h2>Related</h2>
-
-                                <ContentNavigation v-slot="{ navigation }" :query="{ where: [ { tags: doc.show_children } ] }">
-                                    <template v-for="header of navigation[0].children" :key="header._path">
-                                        <template v-for="child of header.children" :key="child._path">
-                                            <div class="mb-4">
-                                                <NuxtLink class="list-group-item list-group-item-action" activeClass="active" :to="child._path">
-                                                    <div class="card">
-                                                        <div class="card-body">
-                                                            <h5 class="card-title">{{ child.title }}</h5>
-                                                            <p class="card-text">
-                                                                <ContentDoc :path="child._path" v-slot="{ doc: child }" :head="false">
-                                                                    {{ child.description }}
-                                                                </ContentDoc>
-                                                            </p>
-                                                        </div>
-                                                    </div>    
-                                                </NuxtLink>
-                                            </div>
-                                        </template>
-                                    </template>
-                                </ContentNavigation>
-                            </template>
                         </article>
                     </ContentDoc>
                 </main>
@@ -51,3 +39,14 @@
         </div>
     </div>
 </template>
+
+<script lang="ts" setup>
+const isDark = useState('theme', () => false)
+
+useHead({
+  bodyAttrs: {
+    class: computed(() => [isDark.value ? 'dark' : 'light']),
+    ["data-bs-theme"] : computed(() => isDark.value ? 'dark' : 'light'),
+  },
+});
+</script>

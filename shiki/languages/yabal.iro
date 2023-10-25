@@ -5,7 +5,8 @@ file_extensions []     = yabal;
 ## Constants
 ################################################################
 
-__KEYWORDS \= (\bint\b|\bbool\b|\bvar\b|\breturn\b|\bfor\b|\bif\b)
+__KEYWORDS \= (\breturn\b|\bfor\b|\bif\b|\binline\b)
+__TYPE_KEYWORDS \= (\bint\b|\bbool\b|\bvar\b)
 __IDENTIFIER \= (\b[a-zA-Z$_][a-zA-Z0-9$_]*)
 
 ################################################################
@@ -193,9 +194,14 @@ contexts [] {
 main : context {
 
    : include "assembly" ;
+
+   : pattern {
+      regex          \= $${__KEYWORDS}
+      styles []       = .keyword;
+   }
    
    : inline_push {
-      regex          \= (\binline)?$${__KEYWORDS}(\s+)$${__IDENTIFIER}(\s*)(\()
+      regex          \= (\binline)?$${__TYPE_KEYWORDS}(\s+)$${__IDENTIFIER}(\s*)(\()
       styles []       = .keyword, .keyword, .source, .variable.other, .source, .meta.brace.round;
       : pop {
          regex       \= (\))
@@ -225,7 +231,7 @@ main : context {
    }
 
    : pattern {
-      regex          \= (\bstackalloc)(\s+)$${__KEYWORDS}
+      regex          \= (\bstackalloc)(\s+)$${__TYPE_KEYWORDS}
       styles []       = .keyword, .source, .keyword;
    }
 
@@ -235,12 +241,12 @@ main : context {
    }
 
    : pattern {
-      regex          \= $${__KEYWORDS}(\s+)$${__IDENTIFIER}
+      regex          \= $${__TYPE_KEYWORDS}(\s+)$${__IDENTIFIER}
       styles []       = .keyword, .source, .variable.other;
    }
 
    : pattern {
-      regex          \= $${__KEYWORDS}
+      regex          \= $${__TYPE_KEYWORDS}
       styles []       = .keyword;
    }
 
@@ -382,43 +388,42 @@ assembly : context {
 ###########################################
 function_parameter : context {
    : pattern {
-      regex          \= $${__KEYWORDS}(\s+)$${__IDENTIFIER}
+      regex          \= $${__TYPE_KEYWORDS}(\s+)$${__IDENTIFIER}
       styles []       = .keyword, .source, .variable.other;
    }
 
    : pattern {
       regex          \= $${__IDENTIFIER}(\s+)$${__IDENTIFIER}
       styles []       = .entity.name, .source, .variable.other;
+   }
+
+   : pattern {
+      regex          \= $${__TYPE_KEYWORDS}(\s*)(\[)(\s*)(\])(\s+)$${__IDENTIFIER}
+      styles []       = .keyword, .source, .punctuation.squarebracket.open, .source, .punctuation.squarebracket.close, .source, .variable.other;
+   }
+
+   : pattern {
+      regex          \= $${__IDENTIFIER}(\s*)(\[)(\s*)(\])(\s+)$${__IDENTIFIER}
+      styles []       = .entity.name, .source, .punctuation.squarebracket.open, .source, .punctuation.squarebracket.close, .source, .variable.other;
    }
    
    : pattern {
       regex       \= (,)
       styles []    = .punctuation.separator.comma;
    }
+   
+   : include "multi_line_comment" ;
+   : include "single_line_comment" ;
 }
 
 ###########################################
 ## Struct Context
 ###########################################
 struct : context {
+   : include "function_parameter" ;
    : pattern {
-      regex          \= $${__KEYWORDS}(\s+)$${__IDENTIFIER}(\s*)(\:)(\s*)(\d+)
-      styles []       = .keyword, .source, .variable.other, .source, .operator, .source, .numeric;
-   }
-   
-   : pattern {
-      regex          \= $${__KEYWORDS}(\s+)$${__IDENTIFIER}
-      styles []       = .keyword, .source, .variable.other;
-   }
-
-   : pattern {
-      regex          \= $${__IDENTIFIER}(\s+)$${__IDENTIFIER}(\s*)(\:)(\s*)(\d+)
-      styles []       = .entity.name, .source, .variable.other, .source, .operator, .source, .numeric;
-   }
-
-   : pattern {
-      regex          \= $${__IDENTIFIER}(\s+)$${__IDENTIFIER}
-      styles []       = .entity.name, .source, .variable.other;
+      regex          \= (\:)(\s*)(\d+)
+      styles []       = .operator, .source, .numeric;
    }
 }
 
