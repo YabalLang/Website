@@ -31,7 +31,7 @@
                 <main>
                     <ContentDoc v-slot="slot">
                         <article>
-                            <ContentRenderer :value="slot.doc" />
+                            <ContentRenderer :value="slot?.doc" />
                         </article>
                     </ContentDoc>
                 </main>

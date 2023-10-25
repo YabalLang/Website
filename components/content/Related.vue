@@ -9,7 +9,7 @@
                                 <h5 class="card-title">{{ child.title }}</h5>
                                 <p class="card-text">
                                     <ContentDoc :path="child._path" v-slot="childSlot" :head="false">
-                                        {{ childSlot.doc.description }}
+                                        {{ childSlot?.doc.description }}
                                     </ContentDoc>
                                 </p>
                             </div>
