@@ -12,9 +12,9 @@
                     </button>
                 </div>
                 <nav>
-                    <ContentNavigation v-slot="{ navigation }">
+                    <ContentNavigation v-slot="slot">
                         <div class="list-group">
-                            <template v-for="link of navigation?.filter(i => i.root)" :key="link._path">
+                            <template v-for="link of slot?.navigation?.filter(i => i.root)" :key="link._path">
                                 <template v-for="child of link.children" :key="child._path">
                                     <NuxtLink class="list-group-item list-group-item-action fw-bold" activeClass="active" :to="child._path">{{ child.title }}</NuxtLink>
 

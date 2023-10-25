@@ -1,6 +1,6 @@
 <template>
-    <ContentNavigation v-slot="{ navigation }" :query="{ where: [ { tags: props.tags.split(',') } ] }">
-        <template v-for="header of navigation[0]?.children ?? []" :key="header._path">
+    <ContentNavigation v-slot="slot" :query="{ where: [ { tags: props.tags.split(',') } ] }">
+        <template v-for="header of slot?.navigation[0]?.children ?? []" :key="header._path">
             <template v-for="child of header.children" :key="child._path">
                 <div class="mb-4">
                     <NuxtLink class="list-group-item list-group-item-action" activeClass="active" :to="child._path">
