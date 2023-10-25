@@ -1,0 +1,1 @@
+import{_ as c,h as s,w as a,i as n,o as _,a as e,d as t}from"./entry.6fa22267.js";const r={},d=e("div",{class:"text-center mt-4"},[t(" Nothing here yet. "),e("a",{href:"/docs"},"Go to the docs"),t(". ")],-1);function i(x,f){const o=n;return _(),s(o,null,{default:a(()=>[d]),_:1})}const u=c(r,[["render",i]]);export{u as default};
