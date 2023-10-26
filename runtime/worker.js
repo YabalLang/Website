@@ -5,10 +5,16 @@ const screenSize = 108 * 108 * 4;
 let running = false;
 
 Module.instantiateWasm = async (info, receiveInstance) => {
-    info.env.UpdateScreen = (offset) => {
-        const screen = HEAPU8.slice(offset, offset + screenSize);
+    info.env.UpdateScreen = (pointer) => {
+        const screen = HEAPU8.slice(pointer, pointer + screenSize);
 
         self.postMessage(screen);
+    };
+
+    info.env.ShowVariable = (line, offset, pointerSize, pointer) => {
+        const data = HEAP32.slice(pointer / 4, (pointer + (pointerSize * 4)) / 4);
+
+        self.postMessage(["variable", line, offset, data]);
     };
     
     info.env.Halt = (offset) => {
@@ -51,7 +57,7 @@ function loop() {
 Module.onRuntimeInitialized = _ => {
     compile = Module.cwrap('Compile', null, ['array', 'number']);
     step = Module.cwrap('Step', null, ['number']);
-    self.postMessage('ready');
+    self.postMessage(["ready"]);
 };
 
 self.onmessage = function handleMessageFromMain(msg) {

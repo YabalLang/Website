@@ -1306,6 +1306,12 @@ var ASM_CONSTS = {
   }
 
   /** @type {function(...*):?} */
+  function _ShowVariable(
+  ) {
+  err('missing function: ShowVariable'); abort(-1);
+  }
+
+  /** @type {function(...*):?} */
   function _UpdateScreen(
   ) {
   err('missing function: UpdateScreen'); abort(-1);
@@ -4616,6 +4622,7 @@ function checkIncomingModuleAPI() {
 }
 var asmLibraryArg = {
   "Halt": _Halt,
+  "ShowVariable": _ShowVariable,
   "UpdateScreen": _UpdateScreen,
   "__syscall_fadvise64": ___syscall_fadvise64,
   "__syscall_fcntl64": ___syscall_fcntl64,
@@ -4714,7 +4721,7 @@ var stackRestore = Module["stackRestore"] = createExportWrapper("stackRestore");
 /** @type {function(...*):?} */
 var stackAlloc = Module["stackAlloc"] = createExportWrapper("stackAlloc");
 
-var ___Module__DATA = Module['___Module__DATA'] = 1356100;
+var ___Module__DATA = Module['___Module__DATA'] = 1356528;
 
 
 
