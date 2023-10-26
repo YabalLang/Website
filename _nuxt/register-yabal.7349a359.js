@@ -1,0 +1,1 @@
+import{l as a}from"./toggleHighContrast.b5940a17.js";import{e as r,Y as e}from"./yabal.febb5bd1.js";import"./entry.2629bade.js";import"./_commonjsHelpers.de833af9.js";import"./editor.main.745ec585.js";a.register({id:"yabal"});r.registerRulesForLanguage("yabal",new e);
