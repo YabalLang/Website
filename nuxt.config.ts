@@ -2,7 +2,8 @@ import fs from 'fs'
 
 export default defineNuxtConfig({
     modules: [
-        '@nuxt/content'
+        '@nuxt/content',
+        'nuxt-monaco-editor'
     ],
     content: {
         highlight: {
@@ -22,5 +23,5 @@ export default defineNuxtConfig({
     components: {
         global: true,
         dirs: ['~/components']
-    },
+    }
 })

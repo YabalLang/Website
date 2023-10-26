@@ -837,7 +837,7 @@
     which "^3.0.1"
     ws "^8.14.2"
 
-"@nuxt/kit@3.8.0", "@nuxt/kit@^3.7.4", "@nuxt/kit@^3.8.0":
+"@nuxt/kit@3.8.0", "@nuxt/kit@^3.6.5", "@nuxt/kit@^3.7.4", "@nuxt/kit@^3.8.0":
   version "3.8.0"
   resolved "https://registry.yarnpkg.com/@nuxt/kit/-/kit-3.8.0.tgz#cd8a32981c2fe151e0acde7145f7e4ca38920f24"
   integrity sha512-oIthQxeMIVs4ESVP5FqLYn8tj0S1sLd+eYreh+dNYgnJ2pTi7+THR12ONBNHjk668jqEe7ErUJ8UlGwqBzgezg==
@@ -2743,7 +2743,7 @@ fast-fifo@^1.1.0, fast-fifo@^1.2.0:
   resolved "https://registry.yarnpkg.com/fast-fifo/-/fast-fifo-1.3.2.tgz#286e31de96eb96d38a97899815740ba2a4f3640c"
   integrity sha512-/d9sfos4yxzpwkDkuN7k2SqFKtYNmCTzgfEpz82x34IM9/zc8KGxQoXg1liNC/izpRM/MBdt44Nmx41ZWqk+FQ==
 
-fast-glob@^3.2.7, fast-glob@^3.3.0, fast-glob@^3.3.1:
+fast-glob@^3.2.11, fast-glob@^3.2.7, fast-glob@^3.3.0, fast-glob@^3.3.1:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/fast-glob/-/fast-glob-3.3.1.tgz#784b4e897340f3dbbef17413b3f11acf03c874c4"
   integrity sha512-kNFPyjhh5cKjrUltxs+wFx+ZkbRaxxmZ+X0ZU31SOsxCEtP9VPgtq2teZw1DebupL5GmDaNQ6yKMMVcM41iqDg==
@@ -4787,6 +4787,21 @@ mlly@^1.2.0, mlly@^1.3.0, mlly@^1.4.0, mlly@^1.4.2:
     pkg-types "^1.0.3"
     ufo "^1.3.0"
 
+monaco-ace-tokenizer@^0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/monaco-ace-tokenizer/-/monaco-ace-tokenizer-0.2.3.tgz#047719f59c6ad0cdfb5e5afb6d7331a103bde754"
+  integrity sha512-cKQJly1qHzW3Wj0d2dzpg69hZpiCSAhSEdw48Z5imC5itLKltKT2iz60M75tfLWNrtKYmwPkJbT4dYoLZpyyHA==
+
+monaco-editor-nls@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/monaco-editor-nls/-/monaco-editor-nls-3.1.0.tgz#64086be3b0ee6791ac6bd99c9b1b45ad819c26ee"
+  integrity sha512-GdzgKRAiwXlGI/ude/HbzP8ukml28yUoZ7rx/xsSsmYf9W13jTyWjXjoMK/+pjL6JorAThH2WkCYaDoCnIX7Jg==
+
+monaco-editor@^0.44.0:
+  version "0.44.0"
+  resolved "https://registry.yarnpkg.com/monaco-editor/-/monaco-editor-0.44.0.tgz#3c0fe3655923bbf7dd647057302070b5095b6c59"
+  integrity sha512-5SmjNStN6bSuSE5WPT2ZV+iYn1/yI9sd4Igtk23ChvqB7kDk9lZbB9F5frsuvpB+2njdIeGGFf2G4gbE6rCC9Q==
+
 mri@^1.1.0, mri@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/mri/-/mri-1.2.0.tgz#6721480fec2a11a4889861115a48b6cbe7cc8f0b"
@@ -5100,6 +5115,15 @@ nuxi@^3.9.1:
   integrity sha512-4R4tcC2uQ5QCnHxyKoX5nZm/YUesCcQM3bZBKYU/8ZWrWjK6aPG6Q5zOQG1aLPkAotyahNsqtSiU/CrRoenEgA==
   optionalDependencies:
     fsevents "~2.3.3"
+
+nuxt-monaco-editor@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/nuxt-monaco-editor/-/nuxt-monaco-editor-1.2.3.tgz#2245a01ed1d837d23eb00a6d0f78ee82c3b84d70"
+  integrity sha512-klN/LVR1Pv29Qa4wfQKCcCGbF5uIRCrSWasvgioh9N+CE6I6tUodOPvgvWE+Nnf1ivvgx0dKOFjM+CkoT1bK/w==
+  dependencies:
+    "@nuxt/kit" "^3.6.5"
+    monaco-editor-nls "^3.1.0"
+    vite-plugin-static-copy "^0.17.0"
 
 nuxt@^3.8.0:
   version "3.8.0"
@@ -7028,6 +7052,16 @@ vite-plugin-inspect@^0.7.40:
     open "^9.1.0"
     picocolors "^1.0.0"
     sirv "^2.0.3"
+
+vite-plugin-static-copy@^0.17.0:
+  version "0.17.0"
+  resolved "https://registry.yarnpkg.com/vite-plugin-static-copy/-/vite-plugin-static-copy-0.17.0.tgz#e45527da186c4a3818d09635797b6fc7cc9e035f"
+  integrity sha512-2HpNbHfDt8SDy393AGXh9llHkc8FJMQkI8s3T5WsH3SWLMO+f5cFIyPErl4yGKU9Uh3Vaqsd4lHZYTf042fQ2A==
+  dependencies:
+    chokidar "^3.5.3"
+    fast-glob "^3.2.11"
+    fs-extra "^11.1.0"
+    picocolors "^1.0.0"
 
 vite-plugin-vue-inspector@^4.0.0:
   version "4.0.0"
