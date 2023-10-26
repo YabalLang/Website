@@ -15,7 +15,7 @@
     </div>
 </template>
 
-<style>
+<style lang="scss">
 
 :root {
     --scale: 2;
@@ -44,6 +44,25 @@
 .screen-container {
     display: flex;
     justify-content: center;
+}
+
+.variable-display-content {
+    position: relative;
+    display: inline-block;
+    opacity: .5;
+    transform: scale(0.9);
+
+    &:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 100%;
+        z-index: -1;
+        background-color: rgba(0, 0, 0, .2);
+        border-radius: 4px;
+    }
 }
 </style>
 
@@ -83,11 +102,16 @@ onMounted(() => {
     const imageData = ctx.createImageData(108, 108);
 
     const worker = new Worker('/runtime/worker.js');
+    let variableValues: {[key: string]: Editor.IModelDeltaDecoration} = {};
+    let showVariables = false;
 
     function run(code: string) {
         const enc = new TextEncoder();
         const bytes = enc.encode(code);
         const buffer = bytes.buffer;
+
+        showVariables = true;
+        variableValues = {}
 
         worker.postMessage(['program', buffer], [buffer]);
     }
@@ -129,14 +153,53 @@ onMounted(() => {
         runCode();
     }
 
-    worker.onmessage = (event) => {
-        if (event.data === "ready") {
-            ready.value = true;
-            
-            const code = editorState.value.code;
+    const decorations = editor.createDecorationsCollection([]);
 
-            if (code) {
-                run(code);
+    editor.onDidChangeModelContent(() => {
+        if (showVariables) {
+            showVariables = false;
+            decorations.set([]);
+        }
+    });
+
+    worker.onmessage = (event) => {
+        if (Array.isArray(event.data)) {
+            const type = event.data[0];
+
+            switch (type) {
+                case "ready":
+                {
+                    ready.value = true;
+                    
+                    const code = editorState.value.code;
+
+                    if (code) {
+                        run(code);
+                    }
+                    break;
+                }
+
+                case "variable":
+                {
+                    const [, line, column, data] = event.data as [string, number, number, Int32Array];
+                    const key = `${line}:${column}`;
+
+                    variableValues[key] = {
+                        range: new monaco.Range(line, column, line, column + 1),
+                        options: {
+                                after: {
+                                content: data.length === 1 ? ` = ${data[0].toString()} ` : ` = [${Array.from(data).join(", ")}] `,
+                                inlineClassName: "variable-display-content"
+                            }
+                        },
+                    };
+
+                    if (showVariables) {
+                        decorations.set(Object.values(variableValues));
+                    }
+
+                    break;
+                }
             }
         } else {
             imageData.data.set(event.data as Uint8Array);

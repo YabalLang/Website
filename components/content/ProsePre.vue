@@ -1,6 +1,6 @@
 <template>
     <div class="d-flex flex-column">
-        <button v-if="$props.language === 'yabal'" type="button" class="btn btn-sm btn-outline-secondary small mb-2 align-self-end" @click.prevent="showCode">Run example</button>
+        <button v-if="$props.language === 'yabal' && $props.filename === 'run'" type="button" class="btn btn-sm btn-outline-secondary small mb-2 align-self-end" @click.prevent="showCode">Run example</button>
         <pre :class="$props.class"><slot /></pre>
     </div>
 </template>

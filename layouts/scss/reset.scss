@@ -3,12 +3,24 @@
 .shiki {
     border: .125rem solid #e6e6e6;
     background: #f2f2f2;
-    padding: 0.5rem;
+    padding: 0.5rem 0;
+
+    .line {
+        padding: 0 0.5rem;
+
+        &.highlight {
+            background: #ffffcc;
+        }
+    }
 }
 
 .dark .shiki {
     border-color: #333;
     background: #222;
+
+    .line.highlight {
+        background: #333;
+    }
 }
 
 h1, h2, h3 {
