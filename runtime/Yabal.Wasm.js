@@ -4721,7 +4721,7 @@ var stackRestore = Module["stackRestore"] = createExportWrapper("stackRestore");
 /** @type {function(...*):?} */
 var stackAlloc = Module["stackAlloc"] = createExportWrapper("stackAlloc");
 
-var ___Module__DATA = Module['___Module__DATA'] = 1356528;
+var ___Module__DATA = Module['___Module__DATA'] = 1356544;
 
 
 
