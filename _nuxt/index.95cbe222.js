@@ -1,0 +1,1 @@
+import{_ as c,k as s,w as a,l as n,o as _,a as e,d as t}from"./entry.c71cea35.js";const r={},d=e("div",{class:"text-center mt-4"},[t(" Nothing here yet. "),e("a",{href:"/docs"},"Go to the docs"),t(". ")],-1);function x(f,i){const o=n;return _(),s(o,null,{default:a(()=>[d]),_:1})}const u=c(r,[["render",x]]);export{u as default};

@@ -21,6 +21,11 @@ Module.instantiateWasm = async (info, receiveInstance) => {
         running = false;
     };
 
+    info.env.Start = () => {
+        running = true;
+        loop();
+    }
+
     console.time('Loading WASM file');
     const response = await fetch('./Yabal.Wasm.wasm', {
         credentials: 'same-origin'
@@ -69,9 +74,6 @@ self.onmessage = function handleMessageFromMain(msg) {
             const array = new Uint8Array(parameter);
             const runCode = Module.cwrap('Compile', null, ['array', 'number']);
             runCode(array, array.length);
-
-            running = true;
-            loop();
         } finally {
             console.timeEnd('Compiling program');
         }
